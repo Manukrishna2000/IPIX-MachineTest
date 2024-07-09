@@ -3,7 +3,17 @@ const express = require('express');
 const { checkAdmin } = require('../middleware/auth');
 const Category = require('../models/Category');
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const Product = require('../models/Product');
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+
+const upload = multer({ storage: storage });
 
 const router = express.Router();
 
@@ -14,6 +24,7 @@ router.post('/category', checkAdmin, async (req, res) => {
         await category.save();
         res.status(201).json({ message: 'Category created successfully' });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: 'Error creating category' });
     }
 });
@@ -42,12 +53,14 @@ router.delete('/category/:id', checkAdmin, async (req, res) => {
 
 router.post('/product', checkAdmin, upload.array('images', 5), async (req, res) => {
     const { name, description, price, category, stock } = req.body;
-    const images = req.files.map(file => file.path);
+    console.log(req.files);
+    const images = req.files.map(file => file.filename);
     try {
         const product = new Product({ name, description, price, category, images, stock });
         await product.save();
         res.status(201).json({ message: 'Product created successfully' });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: 'Error creating product' });
     }
 });
@@ -82,6 +95,26 @@ router.get('/stock', checkAdmin, async (req, res) => {
         res.status(500).json({ error: 'Error fetching stock' });
     }
 });
+
+router.get('/categories', checkAdmin, async (req, res) => {
+    try {
+        const category = await Category.find()
+        res.json(category);
+    } catch (error) {
+        res.status(500).json({ error: 'Error fetching stock' });
+    }
+});
+router.get('/products', checkAdmin, async (req, res) => {
+    try {
+        const Products = await Product.find()
+        console.log(Products);
+        res.json(Products);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Error fetching stock' });
+    }
+});
+
 
 
 
