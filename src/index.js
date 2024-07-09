@@ -10,6 +10,9 @@ import AdminDashboard from './components/CatalogManagement/AdminDashboard';
 import CategoryPage from './components/CatalogManagement/Category';
 import ProductPage from './components/CatalogManagement/Product';
 import StockListingPage from './components/CatalogManagement/Stock';
+import ProductsPage from './Customer/product';
+import CartPage from './Customer/cart';
+import CheckoutPage from './Customer/checkout';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -22,6 +25,9 @@ root.render(
     <Route path="/cat" element={<CategoryPage />} />
 <Route path="/products" element={<ProductPage />} />
 <Route path="/stock" element={<StockListingPage />} />
+<Route path="/cust/products" element={<ProductsPage/>} />
+                <Route path="/cart" element={<CartPage/>} />
+                <Route path="/checkout" element={<CheckoutPage/>} />
     </Routes>
     </BrowserRouter>
   </React.StrictMode>

@@ -12,7 +12,7 @@ const addCategory = async (categoryName) => {
 };
 
 const addProduct = async (formData) => {
-    const response = await axios.post('/admin/products', formData, {
+    const response = await axios.post('/admin/product', formData, {
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'multipart/form-data' }
@@ -32,6 +32,13 @@ const getCategories = async () => {
     const response = await axios.get('/admin/categories', config);
     return response.data;
 };
+
+const getProduct = async () => {
+    const response = await axios.get('/admin/products', config);
+    return response.data;
+
+};
+
 
 const updateCategory = async (categoryId, categoryName) => {
     const token = localStorage.getItem('token');
@@ -97,5 +104,14 @@ const deleteProduct = async (productId) => {
     const response = await axios.delete(`/admin/product/${productId}`, config);
     return response.data;
 };
+const editProduct = async (productId, formData) => {
+    const response = await axios.put(`/admin/product/${productId}`, formData, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+    return response.data;
+};
 
-export { addCategory,getCategories, addProduct, getStock,updateCategory, deleteCategory, updateProduct, deleteProduct, };
+export { addCategory,getCategories,editProduct,getProduct, addProduct, getStock,updateCategory, deleteCategory, updateProduct, deleteProduct, };
