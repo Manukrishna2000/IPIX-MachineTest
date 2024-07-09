@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { login } from './apiservices/authService';
+import { register } from './apiservices/authService';
 
-const Login = () => {
-    const [data, setData] = useState({ username: '', password: '' });
+const Register = () => {
+    const [data, setData] = useState({ username: '', password: '', role: 'customer' });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
@@ -13,19 +13,18 @@ const Login = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await login(data.username, data.password);
-            localStorage.setItem('token', response.token);
-            setSuccess('Login successful!');
+            await register(data.username, data.password, data.role);
+            setSuccess('Registration successful! You can now log in.');
             setError('');
         } catch (err) {
-            setError('Login failed. Please check your credentials.');
+            setError('Registration failed. Please try again.');
             setSuccess('');
         }
     };
 
     return (
         <div>
-            <h2>Login</h2>
+            <h2>Register</h2>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             {success && <p style={{ color: 'green' }}>{success}</p>}
             <form onSubmit={handleSubmit}>
@@ -51,10 +50,23 @@ const Login = () => {
                         required
                     />
                 </div>
-                <button type="submit">Login</button>
+                <div>
+                    <label htmlFor="role">Role:</label>
+                    <select
+                        id="role"
+                        name="role"
+                        value={data.role}
+                        onChange={handleChange}
+                        required
+                    >
+                        <option value="customer">Customer</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <button type="submit">Register</button>
             </form>
         </div>
     );
 };
 
-export default Login;
+export default Register;
