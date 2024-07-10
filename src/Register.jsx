@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { register } from './apiservices/authService';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
     const [data, setData] = useState({ username: '', password: '', role: 'customer' });
@@ -64,6 +65,7 @@ const Register = () => {
                     </select>
                 </div>
                 <button type="submit">Register</button>
+                <Link to='/'>Login Now</Link>
             </form>
         </div>
     );

@@ -21,7 +21,8 @@ const getProducts = async (category) => {
 
 const getCart = async () => {
     try {
-        const response = await axios.get('/cart', config);
+        let id=localStorage.getItem('id')
+        const response = await axios.get(`/customer/cart/${id}`, config);
         return response.data;
     } catch (error) {
         console.error('Error fetching cart:', error);
@@ -31,7 +32,7 @@ const getCart = async () => {
 
 const addToCart = async (productId, quantity) => {
     try {
-        const response = await axios.post('/cart', { productId, quantity }, config);
+        const response = await axios.post('/customer/cart', { productId, quantity }, config);
         return response.data;
     } catch (error) {
         console.error('Error adding to cart:', error);
@@ -41,7 +42,7 @@ const addToCart = async (productId, quantity) => {
 
 const checkout = async (paymentDetails) => {
     try {
-        const response = await axios.post('/checkout', { paymentDetails }, config);
+        const response = await axios.post('/customer/checkout', { paymentDetails }, config);
         return response.data;
     } catch (error) {
         console.error('Error during checkout:', error);

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { login } from './apiservices/authService';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [data, setData] = useState({ username: '', password: '' });
@@ -9,12 +10,20 @@ const Login = () => {
     const handleChange = (event) => {
         setData({ ...data, [event.target.name]: event.target.value });
     };
-
+let navigate=useNavigate()
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
             const response = await login(data.username, data.password);
+            console.log(response);
             localStorage.setItem('token', response.token);
+            localStorage.setItem('id', response.user);
+            if(response.role=='admin'){
+                navigate('/admin')
+            }
+            else if(response.role=='customer'){
+                navigate('/cust/products')
+            }
             setSuccess('Login successful!');
             setError('');
         } catch (err) {
@@ -53,6 +62,7 @@ const Login = () => {
                 </div>
                 <button type="submit">Login</button>
             </form>
+           <Link to='/register'> <div>Register</div></Link>
         </div>
     );
 };

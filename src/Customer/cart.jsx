@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { getCart } from '../apiservices/customerService';
-
+import {useNavigate} from 'react-router-dom'
 const CartPage = ({ history }) => {
     const [cart, setCart] = useState(null);
-
+let navigate=useNavigate()
     useEffect(() => {
         fetchCart();
     }, []);
@@ -18,7 +18,7 @@ const CartPage = ({ history }) => {
     };
 
     const handleCheckout = () => {
-        history.push('/checkout');
+       navigate('/checkout');
     };
 
     if (!cart) {
@@ -27,6 +27,7 @@ const CartPage = ({ history }) => {
 
     return (
         <div>
+
             <h2>Cart</h2>
             <ul>
                 {cart.products.map((item) => (

@@ -22,7 +22,7 @@ const CategoryPage = () => {
     const handleAddCategory = async () => {
         try {
             await addCategory(categoryName);
-            fetchCategories(); // Refresh category list after adding
+            fetchCategories(); 
             setCategoryName('');
         } catch (error) {
             console.error('Error adding category:', error);
@@ -32,8 +32,8 @@ const CategoryPage = () => {
     const handleEditCategory = async (categoryId, newName) => {
         try {
             await updateCategory(categoryId, newName);
-            fetchCategories(); // Refresh category list after updating
-            setEditCategoryId(null); // Clear edit mode
+            fetchCategories(); 
+            setEditCategoryId(null);
         } catch (error) {
             console.error('Error updating category:', error);
         }
@@ -42,7 +42,7 @@ const CategoryPage = () => {
     const handleDeleteCategory = async (categoryId) => {
         try {
             await deleteCategory(categoryId);
-            fetchCategories(); // Refresh category list after deletion
+            fetchCategories(); 
         } catch (error) {
             console.error('Error deleting category:', error);
         }

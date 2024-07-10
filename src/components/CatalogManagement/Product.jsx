@@ -173,9 +173,11 @@ const ProductPage = () => {
             <button onClick={handleAddProduct}>{editingMode ? 'Update Product' : 'Add Product'}</button>
 
             <h2>Products</h2>
-            <ul>
+            <div className='flex'>
                 {products.map(product => (
-                    <li key={product._id}>
+                    <div key={product._id}>
+                        <div className='product'>
+
                         <h3>{product.name}</h3>
                         <p>{product.description}</p>
                         <p>Price: ${product.price}</p>
@@ -184,12 +186,13 @@ const ProductPage = () => {
                         <div>
                             {product.images.map((image, idx) => (
                                 <img key={idx} src={`http://localhost:5000/${image}`} alt="Product" width="100" />
-                            ))}
+                                ))}
                         </div>
                         <button onClick={() => handleEditProduct(product._id)}>Edit</button>
-                    </li>
+                                </div>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };

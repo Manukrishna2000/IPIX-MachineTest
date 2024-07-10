@@ -38,18 +38,18 @@ const ProductsPage = () => {
                     onChange={(e) => setCategory(e.target.value)}
                 />
                 <button onClick={fetchProducts}>Filter</button>
-            </div>
-            <ul>
+            </div><br />
+            <div className='flex'>
                 {products.map((product) => (
-                    <li key={product._id}>
+                    <div className='product' key={product._id}>
                         <h3>{product.name}</h3>
                         <p>{product.description}</p>
                         <p>Price: ${product.price}</p>
                         <p>Stock: {product.stock}</p>
-                        <button onClick={() => handleAddToCart(product._id)}>Add to Cart</button>
-                    </li>
+                        <button ondivck={() => handleAddToCart(product._id)}>Add to Cart</button>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };
