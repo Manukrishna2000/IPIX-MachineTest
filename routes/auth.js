@@ -1,7 +1,8 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const bcrypt=require('bcryptjs')
+const bcrypt=require('bcryptjs');
+const { checkAuth } = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -22,6 +23,10 @@ router.post('/register', async (req, res) => {
     }
  });
 
+ router.post('/authenticate',checkAuth,async (req,res)=>{
+    res.json({status:'success'})
+
+ })
 
  router.post('/login', async (req, res) => {
     const { username, password } = req.body;
@@ -35,7 +40,7 @@ router.post('/register', async (req, res) => {
             return res.status(400).json({ error: 'Invalid credentials' });
         }
         const token = jwt.sign({ id: user._id, role: user.role }, 'jwtSecret', { expiresIn: '1h' });
-        res.json({ token, role: user.role });
+        res.json({ token, role: user.role,user:user._id });
     } catch (error) {
         res.status(500).json({ error: 'Error logging in' });
     }
